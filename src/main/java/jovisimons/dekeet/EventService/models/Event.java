@@ -3,9 +3,11 @@ package jovisimons.dekeet.EventService.models;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jovisimons.dekeet.EventService.LocalDateDeserializer;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
+@Document
 public class Event {
     @Id
     private String id;
