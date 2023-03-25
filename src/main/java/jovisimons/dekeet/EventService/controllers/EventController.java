@@ -1,7 +1,9 @@
 package jovisimons.dekeet.EventService.controllers;
 
+import jovisimons.dekeet.EventService.config.RabbitMQConfig;
 import jovisimons.dekeet.EventService.models.Event;
 import jovisimons.dekeet.EventService.service.EventService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ public class EventController {
     EventService service;
     @GetMapping("/{id}")
     public String GetEvent(@PathVariable Long id){
+        sendMessage("Test");
         return "event";
     }
 
@@ -28,5 +31,15 @@ public class EventController {
     @PostMapping
     public void CreateEvent(@RequestBody Event event){
         service.CreateEvent(event);
+    }
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private RabbitMQConfig config;
+
+    public void sendMessage(String message) {
+        rabbitTemplate.convertAndSend("", "queue", message);
     }
 }
