@@ -36,9 +36,6 @@ public class EventController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    private RabbitMQConfig config;
-
     public void sendMessage(String message) {
         rabbitTemplate.convertAndSend("", "queue", message);
     }
