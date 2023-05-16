@@ -5,11 +5,14 @@ import jovisimons.dekeet.EventService.models.Event;
 import jovisimons.dekeet.EventService.service.EventService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
-@RequestMapping("/event")
+@RequestMapping("api/event")
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class EventController {
@@ -29,8 +32,13 @@ public class EventController {
 
 
     @PostMapping
-    public void CreateEvent(@RequestBody Event event){
+    public ResponseEntity<String> CreateEvent(@RequestBody Event event, @RequestHeader("id") String uid, @RequestHeader("role") String role){
+
+        if(Objects.equals(role, "default"))
+            return new ResponseEntity<>("not authorized", HttpStatus.UNAUTHORIZED);
+
         service.CreateEvent(event);
+        return new ResponseEntity<>("Created succesfully", HttpStatus.OK);
     }
 
     @Autowired
