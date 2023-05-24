@@ -1,7 +1,7 @@
 package jovisimons.dekeet.EventService.controllers;
 
-import jovisimons.dekeet.EventService.config.RabbitMQConfig;
 import jovisimons.dekeet.EventService.models.Event;
+import jovisimons.dekeet.EventService.models.User;
 import jovisimons.dekeet.EventService.service.EventService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,13 @@ public class EventController {
             return new ResponseEntity<>("not authorized", HttpStatus.UNAUTHORIZED);
 
         service.CreateEvent(event);
-        return new ResponseEntity<>("Created succesfully", HttpStatus.OK);
+        return new ResponseEntity<>("Created successfully", HttpStatus.OK);
+    }
+
+    @PostMapping("/{eventId}")
+    public ResponseEntity<String> JoinEvent(@PathVariable String eventId, @RequestBody User user, @RequestHeader("id") String uid, @RequestHeader("role") String role){
+        service.AddUserToEvent(eventId, user);
+        return new ResponseEntity<>("Joined successfully", HttpStatus.OK);
     }
 
     @Autowired
