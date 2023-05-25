@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Document
 public class Event {
@@ -16,6 +17,8 @@ public class Event {
     private LocalDate datum;
     private String theme;
     private String picture;
+    private User host;
+    private ArrayList<User> users = new ArrayList<>();
 
     public Event(){
 
@@ -59,4 +62,20 @@ public class Event {
     public void setPicture(String picture){
         this.picture = picture;
     }
+    public User getHost(){
+        return host;
+    }
+    public void setHost(User host){
+        this.host = host;
+    }
+    public ArrayList<User> getUsers(){
+        return users;
+    }
+    public void setUsers(ArrayList<User> users){
+        this.users = users;
+    }
+    public void setUser(User user){
+        this.users.add(user);
+    }
+
 }
