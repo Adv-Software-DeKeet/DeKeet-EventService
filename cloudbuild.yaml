@@ -30,4 +30,10 @@ steps:
 #      --delivery-pipeline=deploy-to-gke
 #      --region=europe-west4
 #      --source=src/main/resources
+- name: gcr.io/de-keet/docker-compose
+  env:
+    - 'K6_CLOUD_TOKEN=27e90f135dd334b21a01a972201ace0a33f03ce6497f5640cdce47b146c9f205'
+  args:
+    - run
+    - k6
 tags: [ 'cloud-builders-community' ]

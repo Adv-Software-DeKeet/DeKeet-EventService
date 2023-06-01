@@ -54,4 +54,16 @@ public class EventService {
         update.set("users.$.name", "Deleted user");
         mt.updateMulti(select, update, Event.class);
     }
+
+    public void updateUser(UserMsgName user){
+        Query select = Query.query(Criteria.where("users.uid").is(user.getUid()));
+        Update update = new Update();
+        update.set("users.$.name", user.getName());
+        mt.updateMulti(select, update, Event.class);
+
+        Query selectt = Query.query(Criteria.where("host.uid").is(user.getUid()));
+        Update updatee = new Update();
+        updatee.set("host.name", user.getName());
+        mt.updateMulti(selectt, updatee, Event.class);
+    }
 }
